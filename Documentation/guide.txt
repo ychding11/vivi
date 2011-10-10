@@ -1,0 +1,365 @@
+
+  Getting started with vivi
+
+
+      Janghoon Lyu (nandy@mizi.com)
+      
+
+This is a short introduction about the vivi.
+
+Revision History
+
+Revision v0.1 2002-10-21 Revised by: jl
+Initial public release. very very short descriptions. (with foolish
+sentences -_-;;)
+
+------------------------------------------------------------------------
+
+Table of Contents
+
+1. Introduction
+    1.1. Definitions
+
+2. Compiling the vivi
+    2.1. Pre-Requirements
+    2.2. Straight-forward compilation
+    2.3. SA-1110-Based machines with the NOR flash
+    2.4. S3C2410-Based machines with the NAND flash
+
+3. Using the vivi
+    3.1. Interface between an user and the vivi
+    3.2. Built-in user commands
+        3.2.1. load command
+        3.2.2. part command
+        3.2.3. param command
+        3.2.4. boot command
+        3.2.5. flash command
+
+------------------------------------------------------------------------
+
+
+
+   1. Introduction
+
+This document explains to you:
+
+   1) compiling the vivi
+
+   2) interface an user and the vivi
+
+   3) avaliable user commands
+
+
+
+     1.1. Definitions
+
+vivi
+
+    The vivi is one of arm boot loaders.
+
+Autoboot mode
+
+    The vivi has two modes. one of these is autoboot mode. This is a
+    default mode. In this mode, The vivi automatically boot-up the linux
+    kernel when a delay time is expired.
+
+Prompt mode
+
+    One of vivi's modes is prompt mode. In this mode, An user is able
+    to command to the vivi doing something.
+
+Host platform
+
+    Generally, an engineer develop the software on the powerful destktop
+    computer (not on the embedded machines). This descktop called host
+    platform.
+
+Target platform
+
+    Target platform means developemnt boards or embedded machines.
+
+
+
+  2. Compiling the vivi
+
+This section describes how to compile the vivi.
+
+
+
+    2.1. Pre-Requirements
+
+Here is a list of the minimum levels of software necessary to compile
+the vivi.
+
+    * Gnu C     2.95.3
+    * Gnu make  3.79.1
+    * binutils  2.11.2
+
+And then, your host platform are installed these tools.
+
+    * You have a cross-compiler and tool-chains.
+    * You have a Baurne-Again shell. (/bin/bash)
+    * You have a ncurses library.
+
+
+
+    2.2. Straight-forward compilation
+
+The compiliation(configuration) environment of the vivi is simlilar to
+the environment of the linux kernel. So, you can do make distclean,
+make clean, make oldconfig , make menuconfig, and make config.
+General compiling sequence sequence is:
+
+   1)  make distclean
+   2)  make menuconfig
+   3)  make
+
+Note that If you change configurations, run make clean and make.
+Next two sections describes compilation of two examples.
+
+
+
+    2.3. SA-1110-Based machines with the NOR flash
+
+I will take an example about the vivi compliation. I assumed that a
+target platform's core block is composed like this:
+
+    * CPU: SA-1110 processor
+    * ROM: 32MB Intel Strata Flash (32-bit wide)
+    * RAM: 32MB DRAM
+
+These features make sense to you. Many platforms I have met is designed
+core block like above. For instance, KINGS, GILL, and ENDA's core block
+is designed like this. Therefore, you refer to vivi/arch/def-configs/kings, 
+vivi/arch/def-configs/gill, and vivi/arch/def-configs/enda
+
+If you want to compile vivi for KINGS(i.e. a configuration of a target
+board, alredy exist in the vivi/arch/def-cofnigs), just do like this:
+
+# make kings
+
+Other machines can complie same ways.
+
+
+
+    2.4. S3C2410-Based machines with the NAND flash
+
+Here, I will take an example about a S3C2410-Based machine. The
+SMDK-2410 (a development board by SAMSUNG) is a S3C2410-Based machine.
+The core block of SMDK-2410 is composed like this:
+
+    * CPU: S3C2410
+    * ROM: 64MB SMC (NAND Flash)
+    * RAM: 64MB DRAM
+
+A configuration for SMDK-2401 will be found at
+vivi/arch/def-configs/smdk2410. To compile for SMDK-2410, do like this:
+(As I described above)
+
+# make smdk2410
+
+
+
+  3. Using the vivi
+
+
+    3.1. Interface between an user and the vivi
+
+The vivi uses the serical communication for user interface. Therefore,
+to connect the vivi, you 1) connect a serial cable between host paltform
+and target platform. 2) already have a serial communication program like
+the minicom. 3) properly make the vivi binary to support a UART port
+when you configure the vivi.
+
+If all of above is ok, you can see messages on the screen printed by the
+vivi. For example, below messages catched from the SMDK-2410
+
+VIVI version 0.1.4 (nandy@nandy.mizi.com) (gcc version 2.95.2 20000516 (release) 
+[Rebel.com]) #0.1.4 ¼ö 10¿ù 16 16:19:11 KST 2002
+MMU table base address = 0x33DFC000
+Succeed memory mapping.
+NAND device: Manufacture ID: 0xec, Chip ID: 0x75 (Samsung KM29U256T)
+Found saved vivi parameters.
+Press Return to start the LINUX now, any other key for vivi 
+
+See the last line on the screen. (As I mentioned section 1.1) the vivi
+has two mode: an autoboot mode and a prompt mode. The vivi wait for a
+key input. If an user want to enter the prompt mode, press andy key
+(except Enter key). And then you can see the "vivi>" prompt. Otherwise,
+the vivi try boot the linux kernel after waiting a few seconds or minutes.
+
+
+
+    3.2. Built-in user commands
+
+This is not full-described built-in user comamnd. But following commands
+is enough to use the vivi (as far as I know).
+
+
+
+      3.2.1. load command
+
+A load command is loading binaries to the flash or the ram.
+
+Usage:
+
+load <media_type> [ <partname> | <addr> <size> ] <x|y|z>
+
+<media_type>
+
+    This argument is where to load. Availabe values are *flash* and *ram*.
+
+[ <partname> ] or [ <addr> <size> ]
+
+    This arguement determines location where to load a binary. If you
+    want to use pre-defined mtd partiton informations, just type a
+    partition name. Otherwise you specify an address and a size.
+
+<x|y|z>
+
+    This arguement determines the file transfer protocol. I shy that the
+    vivi only supprot xmodem curruntly. So, Available value is "x".
+
+For exampe, you load zImage to flash memroy.
+
+vivi > load flash kernel x
+
+or you specify an address and a size.
+
+vivi > load flash 0x80000 0xc0000 x
+
+
+
+      3.2.2. part command
+
+The vivi has mtd partiton informations for the vivi. This informatin not
+related to mtd partition informations of mtd device drivers. The vivi
+uses partition informations when load a binary, boot the linux kernel,
+erase flash memroy, etc...
+
+Avalilable commands are:
+
+Display mtd partition informations.
+
+part show
+
+Add a new mtd partition.
+
+part add <name> <offset> <size> <flag>
+
+<name>
+
+    is name of a new mtd partiton.
+
+<offset>
+
+    is offset in the mtd device.
+
+<size>
+
+    is a size of a mtd parition.
+
+<flag>
+
+    is flags of a mtd parition. Available valuse are JFFS2, LOCKED,
+    and BONFS.
+
+Delete a mtd partiton.
+
+part del <partname>
+
+Reset mtd partitions to default values.
+
+part reset
+
+Save paramter valuse and mtd parition informations to flash permanently.
+
+part save
+
+
+
+      3.2.3. param command
+
+The vivi has some parameter values. For example, the "boot_delay"
+paramter determines how long wait keystroek when the vivi is in the
+autoboot mode. I'm sorry that this feature is in progress. So all listed
+parameter is not available.
+
+Here, I give several tips for you.
+
+If you change the "linxu command line",
+
+vivi> param set linux_cmd_line "you wish.."
+
+If you want to see paramters,
+
+vivi> param show
+
+If you want to wait a long time when recevie file via xmodem,
+
+vivi> param set xmodem_initial_timeout 3000000
+
+If you want to boot imediately when a hardware reset,
+
+vivi> param set boot_delay 100000
+
+
+
+      3.2.4. boot command
+
+A boot command is boot the linux kernel which is stored in the flash
+memroy or ram. Usage:
+
+boot <media_type> [ <partname> | <addr> <size> ]
+
+<media_type>
+
+    This argument is where to store the linux kernel image. Availabe
+    values are ram, nor and smc.
+
+[ <partname> ] or [ <addr> <size> ]
+
+    This arguement determines location where to store the linux kernel.
+    If you want to use pre-defined mtd partiton information, just type a
+    partition name. Otherwise you shuld specify an address and a size.
+
+Note that all argument is optional. If you omit all argument (just type
+boot), all arguments is parsing from pre-defined mtd parititon
+information called "kernel" For example,
+
+vivi> boot
+
+the vivi read the linux kernel binary from the "kernel" mtd parititons.
+
+vivi> boot nor 0x80000
+
+the vivi read the linux kernel binary form the nor flash memory. the
+offset is 0x80000 and the size is default value (0xc0000).
+
+Ocassionally, you want to test the kernel on the ram (not store kernel
+to flash). you can do it on the vivi On the SA-1110 based machine,
+
+vivi> load ram 0xc0008000 x
+vivi> boot ram
+
+On the S3C2410 based machine,
+
+vivi> load ram 0x30008000 x
+vivi> boot ram
+
+On the PXA-240 based machine,
+
+vivi> load ram 0xA0008000 x
+vivi> boot ram
+
+the vivi boot the linux kernel from the ram.
+
+
+
+      3.2.5. flash command
+
+A flash comamnd manages the flash memory. If you want to erase flash
+memory,
+
+flash erase [ <partname> | <offset> <size> ]
+

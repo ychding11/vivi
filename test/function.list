@@ -1,0 +1,7 @@
+void (*mdelay)(unsigned int)
+void (*udelay)(unsigned int usec)
+void *(*mmalloc)(unsigned long size)
+void (*mfree)(void *block)
+char (*getc)(void)
+int (*printk)(const char *fmt, ...)
+void (*command_boot)(int argc, const char **argv)

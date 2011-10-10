@@ -1,0 +1,216 @@
+============================================================================
+Version: 0.1.5
+Release:
+============================================================================
+
+* Add by Janghoon Lyu, 22 October 2002
+   - Add md5 algorithm to check the correctness of a downloaded file.
+
+* Add by Janghoon Lyu, 22 October 2002
+   - Add YMODEM file transfer protocol.
+
+* Patch by Janghoon Lyu, 22 October 2002
+   - Siplify routine of the 'load' command (vivi/lib/load_file.c)
+
+* Patch by Janghoon Lyu, 22 October 2002
+   - Add a new flag to the mtd parition management system. (add MF_ISRAM)
+
+
+
+============================================================================
+Version: 0.1.4
+Release: 2002-10-11
+============================================================================
+
+* Fix by Janghoon Lyu, 20 August 2002
+   - printk.c 에 strnlen()추가
+
+* Patch by Janghoon Lyu, 20 August 2002
+   - 시리얼 구조를 변경했습니다.
+
+* Patch by Janghoon Lyu, 21 August 2002
+   - Private data 구조 변경.
+   - 이에 따른 결과로 SMDK-2410보드에서 SMC
+     에 파라미터 값 읽고 저장하기가 됨.
+
+* Bug report by Janghoon Lyu, 23 August 2002
+   - 사용자 명령어 인식에 문제가 있음.
+       예를들어 param 명령어의 경우 'p', 'pa','par'등이
+       다 통용됨
+
+* Patch by Janghoon Lyu, 25, August 2002
+   - Add a 'bon part' command.
+
+* Patch by Janghoon Lyu, 28 August 2002
+   - Reset handler 추가. Soft or Hard reset 구분
+
+* Patch by Janghoon Lyu, 29 August 2002
+   - Re-wroking amd flash memory.
+
+* Add by Janghoon Lyu, 30 August 2002
+   - Add Power Management to S3C2410. But not tested on the linux.
+
+* Fix by Janghoon Lyu, 2 September 2002
+   - JFFS2 쓸 때의 버그 수정
+
+* Patch by Janghoon Lyu, 10 September 2002
+   - Done the power management for SMDK-2410 development board.
+
+* Fix by Janghoon Lyu, 10 October 2002
+  - Fix bugs related to the mtd partition management.
+
+* Fix by Janghoon Lyu, 11 October 2002
+  - Improve a 'reset' command.
+
+============================================================================
+Version: 0.1.3
+Release: 2002-08-14
+============================================================================
+
+* Patch by SeonKon Choi, 19 July 2002 
+    - 컴파일 경고나는 코드들 수정
+    - menuconfig를 조금 손 봄
+
+* Fix by Janghoon Lyu, 19 July 2002
+    - arch/s3c2410/head.S 를 대대적으로 정리했음
+
+* Patch by Janghoon Lyu, 22 July 2002
+    - 메모리 (RAM) 테스트 하는 코드를 넣어뒀습니다.
+      아직 손볼 부분이 있지만 급하게 메모리의 안정성을
+      테스트 해야 될 부분이 있으면 사용할 수는 있도록
+      해두었습니다.
+
+* Patch by Yoil-iL Joh & Janghoon Lyu, 22 July 2002
+    - 일단 컴파일 되도록 해놨습니다.
+
+* Patch by Janghoon Lyu, 29 July 2002
+    - 게임파크 보드에서 동작되도록 하다.
+
+* TODO by Janghoon Lyu, 30 July 2002
+    - 시리얼 baud rate 관련해서
+        - menuconfig에서 설정하도록 바꿔줘야 함
+        - 부트로더 상에서 동적으로 baud rate 바꾸는 것을 지원해야 함
+        - 지금 vivi_shell()이라고 되어 있는 놈을
+          serial_terminal()뭐 이 비슷한 것으로 바꿔줘야 될 것 같음
+        - serial, printk, putstr등을 좀더 엄밀히 구분해야 될 것 같음
+        - serial baud rate가 하드 코딩되어 있는 놈들(S3C24x0)을
+          수정해 줘야 될 것 같음
+
+* Patch by Janghoon Lyu, 30 July 2002
+
+* Fix by Janghoon Lyu, 31 July 2002
+     - S3C2410에서의 버그들을 수정하다.
+
+* Patch by Janghoon Lyu, 7 August 2002
+   - 타이머 기능을 추가했습니다.
+
+* Patch by Janghoon Lyu, 14 August 2002
+   - SMC 지원
+       - SMDK-2410보드에서 SMC에 이미지 쓸 수 있음
+       - BON용 루트도 쓸 수 있음
+       - TODO
+          파라미터 저장하고 읽는 것 만들어야 됨
+
+============================================================================
+Version: 0.1.2
+Release: 2002-07-15
+============================================================================
+
+* Patch by Janghoon Lyu, 15 July 2002
+   - 디램 크기 자동으로 찾는 코드 추가
+     (PPCBOOT에서 가져옮)
+
+* Patch by Janghoon Lyu, 16 July 2002
+   - 사용자 명령어 체계 다시 작성
+
+* Patch by Janghoon Lyu, 18 July 2002
+    - SA1110 프로세서 캐쉬 비우는 코드 새로 작성
+
+============================================================================
+0.1.1: 2002-07-01
+============================================================================
+
+* Patch by nandy
+    - MTD쪽 코드를 kernel 2.4.18 을 기준으로 새로 작성
+        - CFI 지원
+
+* Patch by Yong-iL Joh 
+   - menuconfig 지원
+
+* 디렉토리 구조가 커널과 같음
+
+============================================================================
+0.0.11: 2002-06-12
+============================================================================
+
+* OS Switching 기능이 제대로 동작하도록 함
+
+* Patch by Yong-iL Joh
+     - printk를 추가
+
+============================================================================
+0.0.10: 2002-05-22
+============================================================================
+
+* make oldconfig 추가
+
+* S3C2410을 지원하기 위한 코드들 추가
+     - SMDK 2410에서 NAND에서 부팅하는 것 지원.
+
+* 삼성의 SMC DOS-FAT 삭제
+
+============================================================================
+0.0.9: 2002-05-11
+============================================================================
+
+* 삼성의 SMC DOS-FAT을 추가. 작동하지 않음
+
+* 삼성 SMDK-2400에 있는 AMD NOR flash를 probe, erase, write하는 코드 추가
+
+============================================================================
+0.0.8: 2002-04-23
+============================================================================
+
+* 대대적인 수술을 하다. (Nandy)
+    - 플래쉬에 load하는 명령어를 정리했습니다.
+    - partition에 관련된 데이터 구조 바꿈
+    - program_flash()함수 추가
+    - 압축안된 커널 부팅 가능하게 함
+    - Makefile 수정
+    - boot-s3c2400.S : 메모리 테스트 코드 추가
+    - 메모리 크기 프로빙하는 명령어의 버그 고침
+    - params set 명령어의 버그 고침
+
+============================================================================
+0.0.7: 2002-02-04
+============================================================================
+
+* 디렉토리 구조를 조금 개편했지만 그래도 허접하다.
+    - Change location of head files
+    - Add 'config' directory for *-cfg.h
+
+============================================================================
+0.0.6: 2002-02-01
+============================================================================
+
+============================================================================
+0.0.5: 2002-01-25
+============================================================================
+
+* Intel Strata Flash메모리를 다루는 코드를 바꾸다.
+    - MTD의 코드를 그대로 포팅 했음.
+    - bootldr에 있는 플래쉬 코드들은 사라짐
+
+============================================================================
+0.0.4: 2001-12-22
+============================================================================
+
+* boot_s3c2400.s 를 정리하다.
+* SMDK-2400용으로 테스트 코드를 만들어 넣다.
+
+============================================================================
+0.0.1: 2002-11-20
+============================================================================
+
+* VIVI를 시작하다.
+* bootldr-2.14.16을 근간으로 작업을 시작하다.

@@ -1,0 +1,67 @@
+**
+** Author: Yong-iL Joh <tolkien@mizi.com> 
+**
+** vivi command에 붙은 option 규칙에 대한 제안서
+**
+** Date: $Date: 2002/08/01 10:05:22 $ 
+**
+** Revision: $Revision: 1.2 $ 
+**
+
+형태:
+	command sub_command [option] argument
+
+command
+	help를 포함하고 있는 명령어 set
+
+subcommand
+	실제 명령어
+
+option
+	필요하면 넣을 것
+
+argument
+	반드시 넣을 것
+
+
+기호설명:
+	[a-zA-Z0-9_]	문자
+	(공란)		구분자
+	[]		option
+	<>		묶음자 (중첩 불가)
+	|		선택자
+
+기호 사용예제
+     this is [test]	"test"라는 option을 사용할 수 있다.
+			this is, this is test
+     this is <test|not_test>
+			this is test, this is not_test
+     this is [test|not_test]
+			this is, this is test, this is not_test
+			this is [<test|not_test>]와 같다.
+     this is [a test]
+			this is, this is a test
+			a와 test는 구분된 option이다.
+     this is [test [or_not]]
+			this is,
+			this is test, this is test or_not     
+     this is [[a|an] [test|not_test]]
+			잘못된 command 설명
+			this is, this is a, this is an,
+			this is test, this is not_test,
+			this is a test, this is an test,
+			this is a not_test, this is an not_test
+			를 뜻한다면
+			this is [a|an] [test|not_test]와 같이 표현한다.
+
+**
+** $Id: optoions.txt,v 1.2 2002/08/01 10:05:22 tolkien Exp $ 
+**
+** Local Variables:
+** mode: txt
+** mode: font-lock
+** version-control: t
+** delete-old-versions: t
+** End:
+**
+** -*- End-Of-File -

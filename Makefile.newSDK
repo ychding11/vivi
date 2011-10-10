@@ -1,0 +1,211 @@
+VERSION = 0
+PATCHLEVEL = 1
+SUBLEVEL = 4
+
+VIVIRELEASE=$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)
+
+ARCH := arm
+
+CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
+	else if [ -x /bin/bash ]; then echo /bin/bash; \
+	else echo sh; fi ; fi)
+TOPDIR	:= $(shell /bin/pwd)
+
+#
+# change this to point to the Linux include directory
+#
+LINUX_INCLUDE_DIR	= /opt/kernel/armv4l/include/
+
+
+VIVIPATH           = $(TOPDIR)/include
+
+HOSTCC          = gcc
+HOSTCFLAGS      = -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer
+
+CROSS_COMPILE   = /opt/kernel/armv4l/bin/armv4l-mizi-linux-
+
+#
+# Include the make variables (CC, etc...)
+#
+
+AS              = $(CROSS_COMPILE)as
+LD              = $(CROSS_COMPILE)ld
+CC              = $(CROSS_COMPILE)gcc
+CPP             = $(CC) -E
+AR              = $(CROSS_COMPILE)ar
+NM              = $(CROSS_COMPILE)nm
+STRIP           = $(CROSS_COMPILE)strip
+OBJCOPY         = $(CROSS_COMPILE)objcopy
+OBJDUMP         = $(CROSS_COMPILE)objdump
+MAKEFILES       = $(TOPDIR)/.config
+MD5SUM		= md5sum
+PERL            = perl
+AWK		= awk
+
+export  VERSION PATCHLEVEL SUBLEVEL KERNELRELEASE \
+        CONFIG_SHELL TOPDIR VIVIPATH HOSTCC HOSTCFLAGS CROSS_COMPILE AS LD CC \
+	CPP AR NM STRIP OBJCOPY OBJDUMP MAKE MAKEFILES MD5SUM PERL AWK
+
+all: 	do-it-all
+
+ifeq (.config,$(wildcard .config))
+include .config
+else
+CONFIGURATION = config
+do-it-all:	config
+endif
+do-it-all:	Version vivi
+
+#
+# standard CFLAGS
+#
+
+CPPFLAGS := -I$(VIVIPATH) -I$(LINUX_INCLUDE_DIR)
+#CFLAGS := $(CPPFLAGS) -Wall -Wstrict-prototypes -Wno-trigraphs -O2 \
+#          -fomit-frame-pointer -fno-strict-aliasing -fno-common
+CFLAGS := $(CPPFLAGS) -Wall -Wstrict-prototypes -O2 -fPIC -fomit-frame-pointer
+AFLAGS := -D__ASSEMBLY__ $(CPPFLAGS)
+
+CORE_FILES	= init/main.o init/version.o lib/lib.o
+LIBS            := lib/priv_data/priv_data.o
+SUBDIRS         = drivers lib
+
+DRIVERS-y :=
+DRIVERS-$(CONFIG_SERIAL) += drivers/serial/serial.o
+DRIVERS-$(CONFIG_MTD) += drivers/mtd/mtd.o
+DRIVERS := $(DRIVERS-y)
+
+CLEAN_FILES = \
+	vivi-elf \
+	vivi \
+	vivi.nm \
+	vivi.map
+
+#
+# Location of the gcc arm libs.
+#
+ARM_GCC_LIBS	= /opt/kernel/armv4l/lib/gcc-lib/armv4l-mizi-linux/2.95.2
+
+OBJCOPYFLAGS = -R .comment -R .stab -R .stabstr
+
+CLIBS = -L$(ARM_GCC_LIBS) -lgcc -lc
+LINKFLAGS = -Tarch/vivi.lds -Bstatic
+
+DISTCLEAN_FILES = \
+	include/autoconf.h include/version.h \
+	scripts/lxdialog/*.o scripts/lxdialog/lxdialog \
+	.menuconfig.log \
+	.config .config.old TAGS tags
+
+include arch/Makefile
+
+export  CPPFLAGS CFLAGS AFLAGS
+
+export  DRIVERS LDFLAGS
+
+Version: dummy
+	@rm -f include/compile.h
+
+vivi: include/version.h $(CONFIGURATION) init/main.o init/version.o linuxsubdirs
+	$(LD) -v $(LINKFLAGS) \
+		$(HEAD) \
+		$(CORE_FILES) \
+		$(DRIVERS) \
+		$(LIBS) \
+		-o vivi-elf $(CLIBS)
+	$(NM) -v -l vivi-elf > vivi.map
+	$(OBJCOPY) -O binary -S vivi-elf vivi $(OBJCOPYFLAGS)
+
+oldconfig:
+	$(CONFIG_SHELL) scripts/Configure -d arch/config.in
+
+config: 
+	$(CONFIG_SHELL) scripts/Configure arch/config.in
+
+menuconfig: include/version.h
+	$(MAKE) -C scripts/lxdialog all
+	$(CONFIG_SHELL) scripts/Menuconfig arch/config.in
+
+clean:
+	find . \( -name '*.o' -o -name core -o -name ".*.flags" \) -type f -print \
+	| grep -v lxdialog/ | xargs rm -f
+	rm -f $(CLEAN_FILES)
+
+distclean: clean
+	rm -f $(DISTCLEAN_FILES)
+
+linuxsubdirs: $(patsubst %, _dir_%, $(SUBDIRS))
+
+$(patsubst %, _dir_%, $(SUBDIRS)) : include/version.h
+	$(MAKE) CFLAGS="$(CFLAGS) $(CFLAGS_KERNEL)" -C $(patsubst _dir_%, %, $@)
+
+$(TOPDIR)/include/version.h: include/version.h
+$(TOPDIR)/include/compile.h: include/compile.h
+
+include/compile.h: $(CONFIGURATION) include/version.h
+	@echo -n \#define UTS_VERSION \"\#$(VIVIRELEASE) > .ver
+	@if [ -f .name ]; then  echo -n \-`cat .name` >> .ver; fi
+	@echo ' '`date`'"' >> .ver
+	@echo \#define VIVI_COMPILE_TIME \"`date +%T`\" >> .ver
+	@echo \#define VIVI_COMPILE_BY \"`whoami`\" >> .ver
+	@echo \#define VIVI_COMPILE_HOST \"`hostname`\" >> .ver
+	@if [ -x /bin/dnsdomainname ]; then \
+	   echo \#define VIVI_COMPILE_DOMAIN \"`dnsdomainname`\"; \
+	 elif [ -x /bin/domainname ]; then \
+	   echo \#define VIVI_COMPILE_DOMAIN \"`domainname`\"; \
+	 else \
+	   echo \#define VIVI_COMPILE_DOMAIN ; \
+	 fi >> .ver
+	@echo \#define VIVI_COMPILER \"`$(CC) $(CFLAGS) -v 2>&1 | tail -1`\" >> .ver
+	@mv -f .ver $@
+
+include/version.h:
+	@echo \#define VIVI_RELEASE \"$(VIVIRELEASE)\" > .ver
+	@echo \#define VIVI_VERSION_CODE `expr $(VERSION) \\* 65536 + $(PATCHLEVEL) \\* 256 + $(SUBLEVEL)` >> .ver
+	@echo '#define VIVI_VERSION(a,b,c) (((a) << 16) + ((b) << 8) + (c))' >>.ver
+	@mv -f .ver $@
+
+init/version.o: init/version.c include/compile.h
+	$(CC) $(CFLAGS) -DUTS_MACHINE='"$(ARCH)"' -c -o init/version.o init/version.c
+
+init/main.o: init/main.c
+	$(CC) $(CFLAGS) $(CFLAGS_KERNEL) $(PROFILING) -c -o $*.o $<
+
+TAGS: dummy
+	etags `find include -name '*.h'`
+	find $(SUBDIRS) init -name '*.[ch]' | xargs etags -a
+
+# Exuberant ctags works better with -I
+tags: dummy
+	CTAGSF=`ctags --version | grep -i exuberant >/dev/null && echo "-I __initdata,__exitdata,EXPORT_SYMBOL,EXPORT_SYMBOL_NOVERS"`; \
+	ctags $$CTAGSF `find include -name '*.h'` && \
+	find $(SUBDIRS) init -name '*.[ch]' | xargs ctags $$CTAGSF -a
+
+%: ./arch/def-configs/% 
+	$(MAKE) distclean
+	cp arch/def-configs/$* ./.config -f
+	$(MAKE) oldconfig
+	$(MAKE)
+	
+
+ifdef CONFIGURATION
+..$(CONFIGURATION):
+	@echo
+	@echo "You have a bad or nonexistent" .$(CONFIGURATION) ": running 'make" $(CONFIGURATION)"'"
+	@echo
+	$(MAKE) $(CONFIGURATION)
+	@echo
+	@echo "Successful. Try re-making (ignore the error that follows)"
+	@echo
+	exit 1
+
+dummy:
+
+else
+
+dummy:
+
+endif
+
+include Rules.make
+

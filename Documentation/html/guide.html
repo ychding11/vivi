@@ -1,0 +1,1201 @@
+<HTML
+><HEAD
+><TITLE
+>Getting started with vivi</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><META
+http-equiv="Content-Type"
+content="text/html; charset=euc-kr"></HEAD
+><BODY
+CLASS="ARTICLE"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="ARTICLE"
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+></A
+>Getting started with vivi</H1
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN4"
+>Janghoon Lyu</A
+></H3
+><DIV
+CLASS="AFFILIATION"
+><DIV
+CLASS="ADDRESS"
+><P
+CLASS="ADDRESS"
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<TT
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:nandy@mizi.com"
+>nandy@mizi.com</A
+>&#62;</TT
+><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</P
+></DIV
+></DIV
+><DIV
+><DIV
+ALIGN="CENTER"
+><A
+NAME="AEN16"
+></A
+><P
+></P
+><P
+>    This is a short introduction about the vivi. 
+    </P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REVHISTORY"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+><TR
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+COLSPAN="3"
+><B
+>Revision History</B
+></TH
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+>Revision v0.1</TD
+><TD
+ALIGN="LEFT"
+>2002-10-21</TD
+><TD
+ALIGN="LEFT"
+>Revised by: jl</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+COLSPAN="3"
+>Initial public release. very very short descriptions.
+        (with foolish sentences -_-;;)</TD
+></TR
+></TABLE
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="#INTRO"
+>Introduction</A
+></DT
+><DD
+><DL
+><DT
+>1.1. <A
+HREF="#DEFINITIONS"
+>Definitions</A
+></DT
+></DL
+></DD
+><DT
+>2. <A
+HREF="#COMPILING"
+>Compiling the vivi</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="#PREREQUIREMENTS"
+>Pre-Requirements</A
+></DT
+><DT
+>2.2. <A
+HREF="#STRAIGHTFORWARDCOMPILING"
+>Straight-forward compilation</A
+></DT
+><DT
+>2.3. <A
+HREF="#SA1100BASEDNORFLASH"
+>SA-1110-Based machines with the NOR flash</A
+></DT
+><DT
+>2.4. <A
+HREF="#S3C2410BASEDNANDFLASH"
+>S3C2410-Based machines with the NAND flash</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="#USINGVIVI"
+>Using the vivi</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="#INTERFACE"
+>Interface between an user and the vivi</A
+></DT
+><DT
+>3.2. <A
+HREF="#USERCOMMANS"
+>Built-in user commands</A
+></DT
+><DD
+><DL
+><DT
+>3.2.1. <A
+HREF="#LOADCOMMAND"
+><B
+CLASS="EMPHASIS"
+>load</B
+> command</A
+></DT
+><DT
+>3.2.2. <A
+HREF="#PARTCOMMAND"
+><B
+CLASS="EMPHASIS"
+>part</B
+> command</A
+></DT
+><DT
+>3.2.3. <A
+HREF="#PARAMCOMMAND"
+><B
+CLASS="EMPHASIS"
+>param</B
+> command</A
+></DT
+><DT
+>3.2.4. <A
+HREF="#BOOTCOMMAND"
+><B
+CLASS="EMPHASIS"
+>boot</B
+> command</A
+></DT
+><DT
+>3.2.5. <A
+HREF="#FLASHCOMMAND"
+><B
+CLASS="EMPHASIS"
+>flash</B
+> command</A
+></DT
+></DL
+></DD
+></DL
+></DD
+></DL
+></DIV
+><DIV
+CLASS="SECTION"
+><H1
+CLASS="SECTION"
+><A
+NAME="INTRO"
+></A
+>1. Introduction</H1
+><P
+>  This document explains to you:
+  <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>compiling the vivi</P
+></LI
+><LI
+><P
+>interface an user and the vivi</P
+></LI
+><LI
+><P
+>avaliable user commands</P
+></LI
+></OL
+>
+  </P
+><P
+> 
+  </P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="DEFINITIONS"
+></A
+>1.1. Definitions</H2
+><P
+>    <P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><B
+CLASS="EMPHASIS"
+>vivi</B
+></DT
+><DD
+><P
+>        The <B
+CLASS="EMPHASIS"
+>vivi</B
+> is one of arm boot loaders.
+        </P
+></DD
+><DT
+><B
+CLASS="EMPHASIS"
+>Autoboot mode</B
+></DT
+><DD
+><P
+>        The vivi has two modes. one of these is <B
+CLASS="EMPHASIS"
+>autoboot</B
+> mode.
+        This is a default mode. In this mode, The vivi automatically boot-up the linux
+        kernel when a delay time is expired.
+        </P
+></DD
+><DT
+><B
+CLASS="EMPHASIS"
+>Prompt mode</B
+></DT
+><DD
+><P
+>        One of vivi's modes is <B
+CLASS="EMPHASIS"
+>prompt</B
+> mode. In this mode,
+        An user is able to command to the vivi doing something.
+        </P
+></DD
+><DT
+><B
+CLASS="EMPHASIS"
+>Host platform</B
+></DT
+><DD
+><P
+>        Generally, an engineer develop the software on the powerful destktop
+        computer (not on the embedded machines). This descktop called host platform.
+        </P
+></DD
+><DT
+><B
+CLASS="EMPHASIS"
+>Target platform</B
+></DT
+><DD
+><P
+>        Target platform means developemnt boards or embedded machines.
+        </P
+></DD
+></DL
+></DIV
+>
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H1
+CLASS="SECTION"
+><A
+NAME="COMPILING"
+></A
+>2. Compiling the vivi</H1
+><P
+>  This section describes how to compile the vivi.
+  </P
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="PREREQUIREMENTS"
+></A
+>2.1. Pre-Requirements</H2
+><P
+>    Here is a list of the minimum levels of software necessary to compile the vivi.
+    <P
+></P
+><UL
+><LI
+><P
+>Gnu C:          2.95.3</P
+></LI
+><LI
+><P
+>Gnu make:       3.79.1</P
+></LI
+><LI
+><P
+>binutils:       2.11.2</P
+></LI
+></UL
+>
+    </P
+><P
+>    And then, your host platform are installed these tools.
+    <P
+></P
+><UL
+><LI
+><P
+>You have a cross-compiler and tool-chains.</P
+></LI
+><LI
+><P
+>You have a Baurne-Again shell. (<TT
+CLASS="FILENAME"
+>/bin/bash</TT
+>)
+      </P
+></LI
+><LI
+><P
+>You have a ncurses library.
+    </P
+></LI
+></UL
+>
+    </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="STRAIGHTFORWARDCOMPILING"
+></A
+>2.2. Straight-forward compilation</H2
+><P
+>    The compiliation(configuration) environment of the vivi is simlilar to the
+    environment of the linux kernel. So, you can do <B
+CLASS="COMMAND"
+>make distclean
+    </B
+>, <B
+CLASS="COMMAND"
+>make clean</B
+>, <B
+CLASS="COMMAND"
+>make oldconfig</B
+>
+    , <B
+CLASS="COMMAND"
+>make menuconfig</B
+>, and <B
+CLASS="COMMAND"
+>make config</B
+>.
+    General compiling sequence sequence is:
+    <P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+><B
+CLASS="COMMAND"
+>make distclean</B
+></P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+>make menuconfig</B
+></P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+>make</B
+></P
+></LI
+></OL
+>
+    </P
+><P
+>    Note that If you change configurations, run <B
+CLASS="COMMAND"
+>make clean</B
+>
+    and <B
+CLASS="COMMAND"
+>make</B
+>.
+    Next two sections describes compilation of two examples.
+    </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="SA1100BASEDNORFLASH"
+></A
+>2.3. SA-1110-Based machines with the NOR flash</H2
+><P
+>    I will take an example about the vivi compliation. I assumed that a target 
+    platform's core block is composed like this:
+    <P
+></P
+><UL
+><LI
+><P
+>CPU:  SA-1110 processor</P
+></LI
+><LI
+><P
+>ROM:  32MB Intel Strata Flash (32-bit wide)</P
+></LI
+><LI
+><P
+>RAM:  32MB DRAM</P
+></LI
+></UL
+>
+    These features make sense to you. Many platforms I have met is designed core
+    block like above. For instance, KINGS, GILL, and ENDA's core block is designed
+    like this. Therefore, you refer to <TT
+CLASS="FILENAME"
+>vivi/arch/def-configs/kings</TT
+>
+    , <TT
+CLASS="FILENAME"
+>vivi/arch/def-configs/gill</TT
+>, and <TT
+CLASS="FILENAME"
+>vivi/arch/def-configs/enda</TT
+>
+    </P
+><P
+>    If you want to compile vivi for KINGS(i.e. a configuration of a target board,
+    alredy exist in the <TT
+CLASS="FILENAME"
+>vivi/arch/def-cofnigs</TT
+>), just do like this:
+    <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+># <B
+CLASS="COMMAND"
+>make kings</B
+> </PRE
+></TD
+></TR
+></TABLE
+>
+    Other machines can complie same ways.
+    </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="S3C2410BASEDNANDFLASH"
+></A
+>2.4. S3C2410-Based machines with the NAND flash</H2
+><P
+>    Here, I will take an example about a S3C2410-Based machine. The SMDK-2410
+    (a development board by SAMSUNG) is a S3C2410-Based machine. The core block
+    of SMDK-2410 is composed like this:
+    <P
+></P
+><UL
+><LI
+><P
+>CPU:   S3C2410</P
+></LI
+><LI
+><P
+>ROM:   64MB SMC (NAND Flash)</P
+></LI
+><LI
+><P
+>RAM:   64MB DRAM</P
+></LI
+></UL
+>
+    A configuration for SMDK-2401 will be found at <TT
+CLASS="FILENAME"
+>vivi/arch/def-configs/smdk2410</TT
+>. 
+    To compile for SMDK-2410, do like this: (As I described above)
+    <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+># <B
+CLASS="COMMAND"
+>make smdk2410</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H1
+CLASS="SECTION"
+><A
+NAME="USINGVIVI"
+></A
+>3. Using the vivi</H1
+><DIV
+CLASS="SECTION"
+><H2
+CLASS="SECTION"
+><A
+NAME="INTERFACE"
+></A
+>3.1. Interface between an user and the vivi</H2
+><P
+>    The vivi uses the serical communication for user interface. Therefore, to connect 
+    the vivi, you 1) connect a serial cable between host paltform and target platform.
+    2) already have a serial communication program like the minicom. 3) properly make 
+    the vivi binary to support a UART port when you configure the vivi.
+    </P
+><P
+>    If all of above is ok, you can see messages on the screen printed by the vivi.
+    For example, below messages catched from the SMDK-2410
+    <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>VIVI version 0.1.4 (nandy@nandy.mizi.com) (gcc version 2.95.2 20000516 (release) 
+[Rebel.com]) #0.1.4 ¼ö 10¿ù 16 16:19:11 KST 2002
+MMU table base address = 0x33DFC000
+Succeed memory mapping.
+NAND device: Manufacture ID: 0xec, Chip ID: 0x75 (Samsung KM29U256T)
+Found saved vivi parameters.
+Press Return to start the LINUX now, any other key for vivi </PRE
+></TD
+></TR
+></TABLE
+>
+    </P
+><P
+>    See the last line on the screen. (As I mentioned section 1.1) the vivi has 
+    two mode: an autoboot mode and a prompt mode. The vivi wait for a key input.
+    If an user want to enter the prompt mode, press andy key (except Enter key).
+    And then you can see the "vivi&#62;" prompt. Otherwise, the vivi try boot the
+    linux kernel after waiting a few seconds or minutes.
+    </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H2
+CLASS="SECTION"
+><A
+NAME="USERCOMMANS"
+></A
+>3.2. Built-in user commands</H2
+><P
+>    This is not full-described built-in user comamnd. But following commands is 
+    enough to use the vivi (as far as I know).
+    </P
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="LOADCOMMAND"
+></A
+>3.2.1. <B
+CLASS="EMPHASIS"
+>load</B
+> command</H3
+><P
+>      A load command is loading binaries to the flash or the ram.
+      </P
+><P
+>      Usage:
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>load &#60;media_type&#62; [ &#60;partname&#62; | &#60;addr&#62; &#60;size&#62; ] &#60;x|y|z&#62;</PRE
+></TD
+></TR
+></TABLE
+>
+      <P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>&#60;media_type&#62;</DT
+><DD
+><P
+>          This argument is where to load.  Availabe values are 
+          <B
+CLASS="EMPHASIS"
+>flash</B
+> and <B
+CLASS="EMPHASIS"
+>ram</B
+>.
+          </P
+></DD
+><DT
+>[ &#60;partname&#62; ] or [ &#60;addr&#62; &#60;size&#62; ]</DT
+><DD
+><P
+>          This arguement determines location where to load a binary.
+          If you want to use pre-defined mtd partiton informations, just type
+          a partition name. Otherwise you specify an address and a size.
+          </P
+></DD
+><DT
+>&#60;x|y|z&#62;</DT
+><DD
+><P
+>          This arguement determines the file transfer protocol. I shy that the 
+          vivi only supprot xmodem curruntly. So, Available value is "x".
+          </P
+></DD
+></DL
+></DIV
+>
+      </P
+><P
+>      For exampe, you load zImage to flash memroy.
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi &#62; <B
+CLASS="COMMAND"
+>load flash kernel x</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+      or you specify an address and a size.
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi &#62; <B
+CLASS="COMMAND"
+>load flash 0x80000 0xc0000 x</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+      </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="PARTCOMMAND"
+></A
+>3.2.2. <B
+CLASS="EMPHASIS"
+>part</B
+> command</H3
+><P
+>      The vivi has mtd partiton informations for the vivi. This informatin not 
+      related to mtd partition informations of mtd device drivers. The vivi uses
+      partition informations when load a binary, boot the linux kernel, erase
+      flash memroy, etc...
+      </P
+><P
+>      Avalilable commands are:
+      </P
+><P
+>      Display mtd partition informations.
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>part show</PRE
+></TD
+></TR
+></TABLE
+>
+      </P
+><P
+>      Add a new mtd partition.
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>part add &#60;name&#62; &#60;offset&#62; &#60;size&#62; &#60;flag&#62;</PRE
+></TD
+></TR
+></TABLE
+>
+      <P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>&#60;name&#62;</DT
+><DD
+><P
+>          is name of a new mtd partiton.
+          </P
+></DD
+><DT
+>&#60;offset&#62;</DT
+><DD
+><P
+>          is offset in the mtd device.
+          </P
+></DD
+><DT
+>&#60;size&#62;</DT
+><DD
+><P
+>          is a size of a mtd parition.
+          </P
+></DD
+><DT
+>&#60;flag&#62;</DT
+><DD
+><P
+>          is flags of a mtd parition. Available valuse are <B
+CLASS="EMPHASIS"
+>JFFS2</B
+>,
+          <B
+CLASS="EMPHASIS"
+>LOCKED</B
+>, and <B
+CLASS="EMPHASIS"
+>BONFS</B
+>.
+          </P
+></DD
+></DL
+></DIV
+>
+      </P
+><P
+>      Delete a mtd partiton.
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>part del &#60;partname&#62;</PRE
+></TD
+></TR
+></TABLE
+>
+      </P
+><P
+>      Reset mtd partitions to default values.
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>part reset</PRE
+></TD
+></TR
+></TABLE
+>
+      </P
+><P
+>      Save paramter valuse and mtd parition informations to flash permanently.
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>part save</PRE
+></TD
+></TR
+></TABLE
+>
+      </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="PARAMCOMMAND"
+></A
+>3.2.3. <B
+CLASS="EMPHASIS"
+>param</B
+> command</H3
+><P
+>      The vivi has some parameter values. For example, the "<B
+CLASS="EMPHASIS"
+>boot_delay
+      </B
+>" paramter determines how long wait keystroek when the vivi 
+      is in the autoboot mode. I'm sorry that this feature is in progress. So
+      all listed parameter is not available. 
+      </P
+><P
+>      Here, I give several tips for you.
+      </P
+><P
+>      If you change the "linxu command line",
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; <B
+CLASS="COMMAND"
+>param set linux_cmd_line "you wish.."</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+      </P
+><P
+>      If you want to see paramters,
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; <B
+CLASS="COMMAND"
+>param show</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+      </P
+><P
+>      If you want to wait a long time when recevie file via xmodem,
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; <B
+CLASS="COMMAND"
+>param set xmodem_initial_timeout 3000000</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+
+      </P
+><P
+>      If you want to boot imediately when a hardware reset,
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; <B
+CLASS="COMMAND"
+>param set boot_delay 100000</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+      </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="BOOTCOMMAND"
+></A
+>3.2.4. <B
+CLASS="EMPHASIS"
+>boot</B
+> command</H3
+><P
+>      A boot command is boot the linux kernel which is stored in the flash memroy
+      or ram.
+      Usage:
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>boot &#60;media_type&#62; [ &#60;partname&#62; | &#60;addr&#62; &#60;size&#62; ]</PRE
+></TD
+></TR
+></TABLE
+>
+      <P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>&#60;media_type&#62;</DT
+><DD
+><P
+>          This argument is where to store the linux kernel image.
+          Availabe values are <B
+CLASS="EMPHASIS"
+>ram</B
+>, <B
+CLASS="EMPHASIS"
+>nor</B
+> and
+          <B
+CLASS="EMPHASIS"
+>smc</B
+>.
+          </P
+></DD
+><DT
+>[ &#60;partname&#62; ] or [ &#60;addr&#62; &#60;size&#62; ]</DT
+><DD
+><P
+>          This arguement determines location where to store the linux kernel.
+          If you want to use pre-defined mtd partiton information, just type
+          a partition name. Otherwise you shuld specify an address and a size.
+          </P
+></DD
+></DL
+></DIV
+>
+      </P
+><P
+>      Note that all argument is optional. If you omit all argument (just type
+      <B
+CLASS="COMMAND"
+>boot</B
+>), all arguments is parsing from pre-defined mtd parititon
+      information called "<B
+CLASS="EMPHASIS"
+>kernel</B
+>"
+      For example,
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; <B
+CLASS="COMMAND"
+>boot</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+      the vivi read the linux kernel binary from the "kernel" mtd parititons.
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; <B
+CLASS="COMMAND"
+>boot nor 0x80000</B
+></PRE
+></TD
+></TR
+></TABLE
+>
+      the vivi read the linux kernel binary form the nor flash memory. the offset is
+      0x80000 and the size is default value (0xc0000).
+      </P
+><P
+>      Ocassionally, you want to test the kernel on the ram (not store kernel 
+      to flash). you can do it on the vivi
+      On the SA-1110 based machine,
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; load ram 0xc0008000 x
+vivi&#62; boot ram</PRE
+></TD
+></TR
+></TABLE
+>
+      On the S3C2410 based machine,
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; load ram 0x30008000 x
+vivi&#62; boot ram</PRE
+></TD
+></TR
+></TABLE
+>
+      On the PXA-240 based machine,
+      <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>vivi&#62; load ram 0xA0008000 x
+vivi&#62; boot ram</PRE
+></TD
+></TR
+></TABLE
+>
+      the vivi boot the linux kernel from the ram.
+      </P
+></DIV
+><DIV
+CLASS="SECTION"
+><HR><H3
+CLASS="SECTION"
+><A
+NAME="FLASHCOMMAND"
+></A
+>3.2.5. <B
+CLASS="EMPHASIS"
+>flash</B
+> command</H3
+><P
+>    A <B
+CLASS="EMPHASIS"
+>flash</B
+> comamnd manages the flash memory.
+    If you want to erase flash memory,
+    <TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>flash erase [ &#60;partname&#62; | &#60;offset&#62; &#60;size&#62; ]</PRE
+></TD
+></TR
+></TABLE
+>
+    </P
+></DIV
+></DIV
+></DIV
+></DIV
+></BODY
+></HTML
+>

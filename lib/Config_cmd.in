@@ -1,0 +1,19 @@
+# lib/Config_cmd.in
+ 
+# $Id: Config_cmd.in,v 1.7 2002/09/12 04:07:05 nandy Exp $
+
+mainmenu_option next_comment
+
+comment 'Add Built-in Commands'
+
+bool 'mem command' CONFIG_CMD_MEM
+dep_bool '  mem test command' CONFIG_MEMORY_RAM_TEST $CONFIG_CMD_MEM
+bool 'param command' CONFIG_CMD_PARAM
+bool 'part command' CONFIG_CMD_PART
+dep_bool 'bon command' CONFIG_CMD_BONFS $CONFIG_MTD_BONFS
+bool 'sleep command' CONFIG_CMD_SLEEP
+dep_bool 'prompt command' CONFIG_CMD_PROMPT $CONFIG_SERIAL_TERM
+bool 'built-in test command' CONFIG_TEST
+bool 'amd command' CONFIG_CMD_AMD_FLASH
+
+endmenu

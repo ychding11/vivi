@@ -1,0 +1,44 @@
+WHAT IS VIVI?
+
+ Vivi is a boot loader for ARM processors.
+
+DOCUMENTATON:
+
+SOFTWARE REQUIREMENTS:
+
+CONFIGUREING:
+
+ - Do a "make config" to configure the vivi. "make config" needs
+   bash to work: it will search for bash in $BASH. /bin/bash and /bin/sh
+   (in the order), so one of those must be correct for it to work.
+
+   Do not skip this step even if you are only upgrading one minor
+   version. New configuration options are added in each release, and
+   odd problems will turn up if the configuration files are not set up
+   as expected. If you want to carry your existing configuration to a
+   new version with minimal work, use "make oldconfig", which will
+   only ask you for the answers to new questions.
+
+ - Alternate configuration commands are:
+        "make menuconfig"  Text based color menus, radiolists & dialogs.
+        "make oldconfig"   Default all questions based on the contents of
+                           your existing ./.config file.
+
+ - Check the top Makefile for further site-dependent configuration.
+
+COMPILING:
+
+ - Do a "make vivi" to create a vivi. all done.
+
+
+BUGS:
+
+To sumit a bug, simply send an email describing the problem
+to nandy@mizi.com. 
+
+
+CONTACT:
+
+Please fee suggestions, bug reports, insults, and bribes back to:
+        Janghoon Lyu
+        <nandy@mizi.com>

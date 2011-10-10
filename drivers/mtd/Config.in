@@ -1,0 +1,18 @@
+
+# $Id: Config.in,v 1.3 2002/08/21 06:31:08 nandy Exp $
+
+mainmenu_option next_comment
+comment 'Memory Technology Devices (MTD)'
+
+bool 'Memory Technology Device (MTD) support' CONFIG_MTD
+if [ "$CONFIG_MTD" = "y" ]; then
+  bool 'Debugging' CONFIG_MTD_DEBUG
+  if [ "$CONFIG_MTD_DEBUG" = "y" ]; then
+    int '  Debugging verbosity (0 = quit, 3 = noisy)' CONFIG_MTD_DEBUG_VERBOSE 0
+  fi
+
+  source drivers/mtd/nor/Config.in
+  source drivers/mtd/maps/Config.in
+  source drivers/mtd/nand/Config.in
+fi
+endmenu

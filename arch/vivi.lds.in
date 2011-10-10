@@ -1,0 +1,6 @@
+SECTIONS { 
+  . = TEXTADDR;
+  .text          : { *(.text) }
+  .data ALIGN(4) : { *(.data) }
+  .bss ALIGN(4)  : { *(.bss)  *(COMMON) }
+} 

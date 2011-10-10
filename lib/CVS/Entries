@@ -1,0 +1,17 @@
+/Config_cmd.in/1.7/Thu Sep 12 04:07:05 2002//
+/Makefile/1.8/Tue Oct 22 08:08:53 2002//
+/boot_kernel.c/1.9/Wed Aug 21 06:42:02 2002//
+/command.c/1.14/Tue Oct 22 08:08:53 2002//
+/ctype.c/1.1.1.1/Fri Jul 19 08:02:35 2002//
+/exec.c/1.4/Sat Aug 10 07:47:08 2002//
+/heap.c/1.2/Thu Aug  8 11:51:14 2002//
+/load_file.c/1.10/Tue Oct 22 08:06:11 2002//
+/md5.c/1.2/Tue Oct 22 08:05:46 2002//
+/memory.c/1.12/Wed Aug 28 05:59:13 2002//
+/memtst.c/1.4/Sat Aug 10 07:47:08 2002//
+/misc.c/1.5/Fri Jan  3 10:31:59 2003//
+/printk.c/1.3/Tue Aug 20 08:10:35 2002//
+/reset_handle.c/1.1/Wed Aug 28 05:57:09 2002//
+/string.c/1.3/Tue Aug 20 08:11:15 2002//
+/time.c/1.3/Wed Aug 14 10:26:16 2002//
+D/priv_data////

@@ -1,0 +1,22 @@
+# drivers/mtd/nand/Config.in
+
+# $Id: Config.in,v 1.3 2002/08/26 11:08:40 nandy Exp $
+
+mainmenu_option next_comment
+
+comment 'NAND Flash Device Drivers'
+
+dep_bool 'NAND Device Support' CONFIG_MTD_NAND $CONFIG_MTD
+if [ "$CONFIG_MTD_NAND" = "y" ]; then
+   bool '  Enable ECC correction algorithm'  CONFIG_MTD_NAND_ECC
+   bool '  Verify NAND page writes' CONFIG_MTD_NAND_VERIFY_WRITE
+   bool '  SMC Device Support' CONFIG_MTD_SMC
+   dep_bool '    bonfs support' CONFIG_MTD_BONFS $CONFIG_MTD_SMC 
+fi
+
+if [ "$CONFIG_MTD_SMC" = "y" ]; then
+   define_bool CONFIG_MTD_NANDY     y
+else
+   define_bool CONFIG_MTD_NANDY     n
+fi
+endmenu

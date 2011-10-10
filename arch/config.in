@@ -1,0 +1,113 @@
+#
+# For a description of the syntax of this configuration file,
+# see Documentation/kbuild/config-language.txt.
+#
+mainmenu_name "Linux Kernel Configuration"
+
+mainmenu_option next_comment
+comment 'System Type'
+
+choice 'ARM system type' \
+  "SA1100-based		CONFIG_ARCH_SA1100 \
+   PXA250/210-based	CONFIG_ARCH_PXA250 \
+   S3C2400-based	CONFIG_ARCH_S3C2400 \
+   S3C2410-based	CONFIG_ARCH_S3C2410"
+
+mainmenu_option next_comment
+comment 'Implementations'
+if [ "$CONFIG_ARCH_SA1100" = "y" ]; then
+  choice 'Platform' \
+    "KINGS	CONFIG_SA1100_KINGS \
+     FORTE	CONFIG_SA1100_FORTE \
+     SUNS	CONFIG_SA1100_SUNS \
+     SUNS_OLD	CONFIG_SA1100_SUNS_OLD \
+     GILL	CONFIG_SA1100_GILL \
+     ENDA	CONFIG_SA1100_ENDA \
+     EXILIEN102	CONFIG_SA1100_EXILIEN102 \
+     WISMO	CONFIG_SA1100_WISMO"
+
+  if [ "$CONFIG_SA1100_ENDA" = "y" ]; then
+    bool '    Down a memory clock to half' CONFIG_SA1100_ENDA_HALFMEMCLK
+    bool '    Define memory sizes' CONFIG_SA1100_ENDA_MEM_SIZE
+    hex '    RAM SIZE' CONFIG_SA1100_ENDA_RAM_SIZE 02000000
+    hex '    FLASH SIZE' CONFIG_SA1100_ENDA_FLASH_SIZE 02000000
+  fi
+  if [ "$CONFIG_SA1100_EXILIEN102" = "y" ]; then
+    bool '    Support 16M ROM/RAM' CONFIG_SA1100_EXILIEN102_16M
+    bool '    Support 32M ROM/RAM' CONFIG_SA1100_EXILIEN102_32M
+    bool '    Down memory clock' CONFIG_SA1100_EXILIEN102_HALFMEMCLK 
+  fi
+fi
+
+if [ "$CONFIG_ARCH_PXA250" = "y" ]; then
+  bool '  SAMSUNG premium' CONFIG_PXA250_PREMIUM $CONFIG_ARCH_PXA250
+  bool '  TRIZEPS2' CONFIG_PXA250_TRIZEPS2 $CONFIG_ARCH_PXA250
+fi
+
+if [ "$CONFIG_ARCH_S3C2400" = "y" ]; then
+  choice 'Platform' \
+    "SMDK	CONFIG_S3C2400_SMDK \
+     GAMEPARK	CONFIG_S3C2400_GAMEPARK"
+  if [ "$CONFIG_S3C2400_GAMEPARK" = "y" ]; then
+    bool '    Support OS Switching' CONFIG_S3C2400_GAMEPARK_OSSWITCH
+    bool '    Run in the RAM' CONFIG_S3C2400_GAMEPARK_ON_RAM
+  fi
+fi
+
+if [ "$CONFIG_ARCH_S3C2410" = "y" ]; then
+  choice 'Platform' \
+    "SMDK	CONFIG_S3C2410_SMDK \
+     MPORT3	CONFIG_S3C2410_MPORT3 \
+	 MPORT1 CONFIG_S3C2410_MPORT1 \
+     MP3 CONFIG_S3C2410_MP3"
+  if [ "$CONFIG_S3C2410_SMDK" = "y" -o "$CONFIG_S3C2410_MPORT3" = "y" \
+		-o "$CONFIG_S3C2410_MPORT1" = "y"  -o "$CONFIG_S3C2410_MP3" = "y" ]; then
+    bool '  Support NAND Boot' CONFIG_S3C2410_NAND_BOOT
+    bool '  Support AMD Boot' CONFIG_S3C2410_AMD_BOOT
+  fi
+  comment 'Low Level Hardware Debugging'
+  bool ' Enable simple memory test' CONFIG_BOOTUP_MEMTEST
+fi
+endmenu
+endmenu
+
+mainmenu_option next_comment
+comment 'General setup'
+
+bool 'Define TEXT Address' CONFIG_VIVI_ADDR
+hex 'vivi base address' CONFIG_VIVI_TEXTADDR 0
+bool 'support reset handler' CONFIG_RESET_HANDLING
+
+comment 'CACHE Enable'
+bool '  I-Cache on' CONFIG_CPU_D_CACHE_ON
+bool '  D-Cache on' CONFIG_CPU_I_CACHE_ON
+
+comment 'Power Mangement'
+bool '  Support power management' CONFIG_PM
+
+comment 'Others'
+bool '  Display progress bar' CONFIG_MSG_PROGRESS
+bool '  Support MD5' CONFIG_MD5
+
+
+endmenu # end 'General setup'
+
+source lib/priv_data/Config.in
+source drivers/serial/Config.in
+source drivers/mtd/Config.in
+source lib/Config_cmd.in
+
+mainmenu_option next_comment
+comment 'System hacking'
+bool ' Support test mode' CONFIG_TEST_MODE
+bool ' Debugging' CONFIG_DEBUG
+if [ "$CONFIG_DEBUG" = "y" ]; then
+  int '  Debugging verbosity (0 = quiet, 3 = noisy)' CONFIG_DEBUG_VERBOSE 0
+fi
+endmenu
+
+mainmenu_option next_commet
+comment 'Debugging messages'
+bool ' VIVI low-level debugging functions' CONFIG_DEBUG_LL
+dep_bool ' Enable CFI debug messages' CONFIG_DEBUG_CFI $CONFIG_MTD_CFI
+endmenu

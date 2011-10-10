@@ -1,0 +1,3 @@
+imagewrite.c ecc.c : 
+  황소장님이 만든 NAND flash 쓰기 프로그램 입니다.
+  imagewrite.c 만 컴파일 하시면 됩니다.

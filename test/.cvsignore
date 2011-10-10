@@ -1,0 +1,7 @@
+*~
+*.o
+*-elf
+*.map
+*.lds
+hello skeleton
+timer

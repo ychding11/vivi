@@ -1,0 +1,32 @@
+#
+# Serial device configuration
+#
+# $Id: Config.in,v 1.3 2002/08/22 05:50:39 nandy Exp $
+#
+mainmenu_option next_comment
+comment 'Serial Port'
+
+bool 'Serial Port (UART) support' CONFIG_SERIAL
+
+if [ "$CONFIG_SERIAL" = "y" ]; then
+  #int 'Default serial baudrate' CONFIG_SERIAL_DEFAULT_BAUDRATE 115200
+  bool 'Support serial terminal' CONFIG_SERIAL_TERM
+  if [ "$CONFIG_SERIAL_TERM" = "y" ]; then
+    choice 'User interface' \
+      "STANDARD	CONFIG_SERIAL_GETCMD_STD \
+       EXTENDED	CONFIG_SERIAL_GETCMD_EXT"
+    string 'Default prompt' CONFIG_SERIAL_TERM_PROMPT "vivi"
+  fi
+  comment 'Ports'
+  bool 'Support UART 0' CONFIG_SERIAL_UART0
+  bool 'Support UART 1' CONFIG_SERIAL_UART1
+  bool 'Support UART 2' CONFIG_SERIAL_UART2
+  bool 'Support UART 3' CONFIG_SERIAL_UART3
+
+  comment 'Transfer Protocol'
+  bool 'Support X-Modem' CONFIG_SERIAL_XMODEM
+  bool 'Support Y-Modem' CONFIG_SERIAL_YMODEM
+  bool 'Support Z-Modem' CONFIG_SERIAL_ZMODEM
+fi
+
+endmenu
